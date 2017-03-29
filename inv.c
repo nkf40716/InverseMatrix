@@ -15,6 +15,7 @@ static void GetMinor(float *src, float *dst, int row, int col, int n)
 			{           
                 if( j != col ) 
 				{
+					// dst[nRow][nCol] = src[i][j]
                     dst[nRow * n + nCol] = src[i * n + j];
                     nCol++;
                 }
@@ -64,7 +65,7 @@ void inv(float *X, int n, float *Y)
             GetMinor(X, minor, j, i, n);
             Y[i * n + j] = (float)(d * determinant(minor, n-1));
             if((i+j) % 2 == 1)
-                Y[i * n + j] = -Y[i * n + j];
+                Y[i * n + j] = -Y[i * n + j]; // Y[i][j] = -Y[i][j]
         }
     }
     free(minor);
