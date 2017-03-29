@@ -6,16 +6,12 @@ static void GetMinor(float *src, float *dst, int row, int col, int n)
 {
     int nCol=0, nRow=0;
  
-    for(int i = 0; i < n; i++) 
-	{
-        if(i != row) 
-		{
+    for(int i = 0; i < n; i++) {
+        if(i != row) {
             nCol = 0;
-            for(int j = 0; j < n; j++) 
-			{           
-                if( j != col ) 
-				{
-					// dst[nRow][nCol] = src[i][j]
+            for(int j = 0; j < n; j++) {           
+                if( j != col ) {
+		// dst[nRow][nCol] = src[i][j]
                     dst[nRow * n + nCol] = src[i * n + j];
                     nCol++;
                 }
