@@ -92,4 +92,6 @@ int main(void)
 		if ((i + 1) % 3 == 0) printf("\n");
 	}	
 	printf("\n");
+	
+	return 0;
 }
