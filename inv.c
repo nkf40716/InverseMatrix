@@ -1,17 +1,24 @@
 #include <stdlib.h> 
 #include <stdio.h>
 
+#ifndef FLT_MAX
+#define FLT_MAX 3.402823466e+38F /* max value */
+#endif
+
 // calculate the cofactor
 static void GetMinor(float *src, float *dst, int row, int col, int n)
 {
     int nCol=0, nRow=0;
  
-    for(int i = 0; i < n; i++) {
-        if(i != row) {
+    for(int i = 0; i < n; i++) 
+	{
+        if(i != row) 
+		{
             nCol = 0;
-            for(int j = 0; j < n; j++) {           
-                if( j != col ) {
-		// dst[nRow][nCol] = src[i][j]
+            for(int j = 0; j < n; j++) 
+			{           
+                if( j != col ) 
+				{
                     dst[nRow * n + nCol] = src[i * n + j];
                     nCol++;
                 }
@@ -22,7 +29,7 @@ static void GetMinor(float *src, float *dst, int row, int col, int n)
 }
  
 // Calculate the determinant, n >= 0
-static float determinant(float *x, int n)
+static double determinant(float *x, int n)
 {
     // stop the recursion
     if(n == 1) return x[0];
@@ -40,7 +47,7 @@ static float determinant(float *x, int n)
     }
 
     free(m);
-    return (float)d;
+    return d;
 }
 
 // Input:  X == two dimensional array matrix
@@ -59,9 +66,16 @@ void inv(float *X, int n, float *Y)
         {
             // get the co-factor (matrix) of A(j,i)
             GetMinor(X, minor, j, i, n);
-            Y[i * n + j] = (float)(d * determinant(minor, n-1));
+			double mul = d * determinant(minor, n-1);	// prevent float overflow. 2017.03.30
+			if (mul > FLT_MAX) 
+				mul = FLT_MAX;
+			if (mul < -FLT_MAX + 0.001 || mul < -FLT_MAX - 0.001)
+				mul = -FLT_MAX + 0.001;
+			Y[i * n + j] = (float)mul;
+//          Y[i * n + j] = (float)(d * determinant(minor, n-1));
+			
             if((i+j) % 2 == 1)
-                Y[i * n + j] = -Y[i * n + j]; // Y[i][j] = -Y[i][j]
+                Y[i * n + j] = -Y[i * n + j];
         }
     }
     free(minor);
