@@ -19,7 +19,7 @@ static void GetMinor(float *src, float *dst, int row, int col, int n)
 			{           
                 if( j != col ) 
 				{
-                    dst[nRow * n + nCol] = src[i * n + j]; //dst[nRow][nCol] = src[i][j]
+                    dst[nRow * (n - 1) + nCol] = src[i * n + j]; //dst[nRow][nCol] = src[i][j]
                     nCol++;
                 }
             }
