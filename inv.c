@@ -69,7 +69,7 @@ void inv(float *X, int n, float *Y)
 			double mul = d * determinant(minor, n-1);	// prevent float overflow. 2017.03.30
 			if (mul > FLT_MAX) 
 				mul = FLT_MAX;
-			if (mul < -FLT_MAX + 0.001 || mul < -FLT_MAX - 0.001)
+			if (mul < -FLT_MAX + 0.001)
 				mul = -FLT_MAX + 0.001;
 			Y[i * n + j] = (float)mul;
 //          Y[i * n + j] = (float)(d * determinant(minor, n-1));
