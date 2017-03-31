@@ -6,4 +6,4 @@ Example main function is included in src.
 
 2017.03.31
 
-Add another method at inv2.c, prevent use recursion for save time
+Add another method in inv2.c, prevent use recursion for save time
